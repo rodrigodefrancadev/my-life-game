@@ -27,3 +27,5 @@ dist-ssr
 # firebase
 .firebase
 dataconnect/.dataconnect
+firebase
+firebase-config.ts

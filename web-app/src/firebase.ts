@@ -5,7 +5,7 @@ import {
   getDataConnect,
 } from "firebase/data-connect";
 import { connectorConfig } from "@firebasegen/default-connector";
-import firebaseConfig from "../secret/firebase-config";
+import firebaseConfig from "../firebase-config";
 
 const useEmulators = true; // Set this flag to true to use emulators
 
