@@ -76,3 +76,13 @@
 #     imageUrl
 #   }
 # }
+
+# # Get user by id
+query GetMyUser @auth(level: USER) {
+  user(key: { id_expr: "auth.uid" }) {
+    id
+    displayName
+    birthday
+    email
+  }
+}
