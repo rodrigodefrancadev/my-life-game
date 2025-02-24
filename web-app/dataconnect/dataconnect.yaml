@@ -1,0 +1,12 @@
+specVersion: "v1beta"
+serviceId: "my-life-game-data-connect"
+location: "southamerica-east1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "my-life-game-db"
+      cloudSql:
+        instanceId: "my-life-game-sql"
+      # schemaValidation: "COMPATIBLE"
+connectorDirs: ["./connector"]
