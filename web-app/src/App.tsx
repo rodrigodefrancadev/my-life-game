@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import { AuthProvider, Sex, useAuth } from "./contexts/auth";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <AuthProvider>
+      <AuthTeste />
+    </AuthProvider>
+  );
 }
 
-export default App
+function AuthTeste() {
+  const { authUser, login, logout, signup, completeUser } = useAuth();
+
+  return (
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <h1>Auth Test</h1>
+      <button onClick={() => login("teste@email.com", "123456")}>Login</button>
+      <button onClick={() => logout()}>Logout</button>
+      <button onClick={() => signup("teste@email.com", "123456")}>
+        Signup
+      </button>
+      <button
+        onClick={() =>
+          completeUser("Nome Teste", new Date("1994-06-05"), Sex.M)
+        }
+      >
+        Completar Usuário
+      </button>
+      <p>{authUser ? `User: ${authUser.uuid}` : "No user"}</p>
+      <p>
+        {authUser && authUser.userData
+          ? "Usuário Completo"
+          : "Usuário Incompleto"}
+      </p>
+    </div>
+  );
+}
+
+export default App;

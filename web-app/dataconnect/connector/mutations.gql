@@ -31,3 +31,10 @@
 #   # The "auth.uid" server value ensures that users can only delete their own reviews.
 #   review_delete(key: { userId_expr: "auth.uid", movieId: $movieId })
 # }
+
+mutation CreateMyUser($displayName: String!, $birthday: Date!, $sex: String!)
+@auth(level: USER) {
+  user_insert(
+    data: { displayName: $displayName, birthday: $birthday, sex: $sex }
+  )
+}

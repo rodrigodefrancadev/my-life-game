@@ -55,6 +55,5 @@ type User @table {
   id: String! @default(expr: "auth.uid")
   displayName: String! @col(dataType: "varchar(50)")
   birthday: Date!
-  email: String! @unique
   sex: String!
 }

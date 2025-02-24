@@ -83,6 +83,6 @@ query GetMyUser @auth(level: USER) {
     id
     displayName
     birthday
-    email
+    sex
   }
 }
