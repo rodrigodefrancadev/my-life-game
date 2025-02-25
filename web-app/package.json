@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
+    "beercss": "^3.9.4",
     "firebase": "^11.3.1",
+    "material-dynamic-colors": "^1.1.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "zustand": "^5.0.3"

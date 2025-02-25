@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { auth } from "../../firebase";
 import AuthContext from "./context";
 import { AuthUser } from "./types";
 import authController from "./use-cases";
@@ -9,26 +8,26 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [authUser, setAuthUser] = useState<AuthUser | null>(null);
 
   useEffect(() => {
+    console.log("AuthProvider -> useEffect", setReady, setAuthUser);
     authController.readyPromise.then(() => {
       setReady(true);
     });
 
-    authController.subscribe((user) => {
+    const unsubscribe = authController.subscribe((user) => {
+      console.log("AuthProvider -> user", user);
       setAuthUser(user);
     });
 
-    return () => {
-      authController.dispose();
-    };
-  }, [setReady, setAuthUser]);
+    return unsubscribe;
+  }, []);
 
   return (
     <AuthContext.Provider
       value={{
         authUser,
         login: authController.signin,
-        logout: auth.signOut,
-        signup: authController.signin,
+        logout: authController.signout,
+        signup: authController.signup,
         completeUser: authController.completeUser,
       }}
     >

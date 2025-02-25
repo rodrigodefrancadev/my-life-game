@@ -21,18 +21,17 @@ export class AuthController {
     return this._currentUser;
   }
 
-  private _disposeFunction: () => void;
-
   constructor() {
     this.readyPromise = new Promise((resolve) => {
       const unsubscribe = auth.onAuthStateChanged(() => {
         this._ready = true;
         resolve();
+        unsubscribe();
       });
-      unsubscribe();
     });
 
-    this._disposeFunction = auth.onAuthStateChanged(async (user) => {
+    auth.onAuthStateChanged(async (user) => {
+      console.log("AuthController -> constructor -> user", user);
       if (user) {
         const getMyUserResult = await getMyUser(dc);
         const userData: UserData | null = getMyUserResult.data.user
@@ -54,14 +53,22 @@ export class AuthController {
         callback(this._currentUser);
       });
     });
+
+    // bind this all functions
+    this.signin = this.signin.bind(this);
+    this.signup = this.signup.bind(this);
+    this.signout = this.signout.bind(this);
+    this.completeUser = this.completeUser.bind(this);
   }
 
-  dispose() {
-    this._disposeFunction();
-  }
-
-  subscribe(callback: (authUser: AuthUser | null) => void) {
+  subscribe(callback: (authUser: AuthUser | null) => void): () => void {
     this._onAuthChangeCallBacks.push(callback);
+    return () => {
+      const index = this._onAuthChangeCallBacks.indexOf(callback);
+      if (index >= 0) {
+        this._onAuthChangeCallBacks.splice(index, 1);
+      }
+    };
   }
 
   async signin(email: string, password: string): Promise<void> {
@@ -69,7 +76,7 @@ export class AuthController {
   }
 
   async signup(email: string, password: string) {
-    return await createUserWithEmailAndPassword(auth, email, password);
+    await createUserWithEmailAndPassword(auth, email, password);
   }
 
   async signout() {
