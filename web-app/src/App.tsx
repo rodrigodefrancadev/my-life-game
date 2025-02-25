@@ -1,5 +1,5 @@
 import "./App.css";
-import { AuthProvider, Sex, useAuth } from "./contexts/auth";
+import { AuthProvider, Sex, useAuth } from "./features/auth";
 
 function App() {
   return (
