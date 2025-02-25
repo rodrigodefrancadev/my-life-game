@@ -1,0 +1,15 @@
+{
+  "version": "13.31.2",
+  "auth": {
+    "version": "13.31.2",
+    "path": "auth_export"
+  },
+  "storage": {
+    "version": "13.31.2",
+    "path": "storage_export"
+  },
+  "dataconnect": {
+    "version": "13.31.2",
+    "path": "dataconnect_export"
+  }
+}
